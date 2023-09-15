@@ -24,4 +24,5 @@ public class MenuRole {
     @JoinTable(name = "menurole_link", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "menu_id"))
     // @ToString.Exclude
     private List<Menu> menus;
+    //test
 }
