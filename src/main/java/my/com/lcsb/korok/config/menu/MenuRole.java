@@ -25,4 +25,5 @@ public class MenuRole {
     // @ToString.Exclude
     private List<Menu> menus;
     //test
+    //test 2
 }
