@@ -1,4 +1,4 @@
-package my.com.lcsb.korok.features;
+package my.com.lcsb.korok.features.enterpriseInfo;
 
 import javax.persistence.*;
 import java.util.Objects;
