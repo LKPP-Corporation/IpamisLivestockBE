@@ -14,6 +14,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Service
 public class EnterpriseInfoService {
+
+   
+
     final private EnterpriseInfoRepository enterpriseInfoRepository;
 
     public EnterpriseInfo save(EnterpriseInfo enterpriseInfo) {
@@ -51,4 +54,6 @@ public class EnterpriseInfoService {
 
         return Specification.where(specid).or(specname).or(specremark);
     }
+
+    
 }

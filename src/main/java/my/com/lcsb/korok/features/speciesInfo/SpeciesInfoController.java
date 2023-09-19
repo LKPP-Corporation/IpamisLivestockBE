@@ -1,4 +1,4 @@
-package my.com.lcsb.korok.features.enterpriseInfo;
+package my.com.lcsb.korok.features.speciesInfo;
 
 import java.util.Optional;
 
@@ -17,50 +17,48 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import lombok.RequiredArgsConstructor;
-//import my.com.lcsb.korok.features.enterpriseInfo.EnterpriseInfo;
 import my.com.lcsb.korok.utilities.SortUtils;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v1/enterpriseInfo")
-public class EnterpriseInfoController {
-    final private EnterpriseInfoService enterpriseInfoService;
+@RequestMapping("/api/v1/speciesInfo")
+public class SpeciesInfoController {
+    final private SpeciesInfoService speciesInfoService;
 
     //save enterprise info
     @Transactional
     @PostMapping("")
-    public ResponseEntity<?> save(@RequestBody EnterpriseInfo enterpriseInfo) {
-        return ResponseEntity.ok(enterpriseInfoService.save(enterpriseInfo));
+    public ResponseEntity<?> save(@RequestBody SpeciesInfo enterpriseInfo) {
+        return ResponseEntity.ok(speciesInfoService.save(enterpriseInfo));
     }
 
      // delete enterprise
     @Transactional
     @DeleteMapping("/{code}")
     public void delete(@PathVariable String code) {
-        enterpriseInfoService.delete(code);
+        speciesInfoService.delete(code);
     }
 
      // get enterprise by code
     @Transactional(readOnly = true)
     @GetMapping("/{code}")
     public ResponseEntity<?> findById(@PathVariable String code) {
-        Optional<EnterpriseInfo> enterpriseInfo = enterpriseInfoService.findById(code);
+        Optional<SpeciesInfo> enterpriseInfo = speciesInfoService.findById(code);
         if (!enterpriseInfo.isPresent()) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(enterpriseInfoService.findById(code));
+        return ResponseEntity.ok(speciesInfoService.findById(code));
     }
     
 @Transactional(readOnly=true)
 @GetMapping("/list")
-public Page<EnterpriseInfo> findall(@RequestParam(required=false , defaultValue="0") int page,
+public Page<SpeciesInfo> findall(@RequestParam(required=false , defaultValue="0") int page,
             @RequestParam(required = false, defaultValue = "10") int size,
             @RequestParam(required = false, defaultValue = "code,asc") String sort,
             @RequestParam(required = false, defaultValue = "") String filter) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(SortUtils.getSortOrder(sort)));
-        Page<EnterpriseInfo> enterpriseInfoPage = enterpriseInfoService.findAll(filter, pageable);
+        Page<SpeciesInfo> enterpriseInfoPage = speciesInfoService.findAll(filter, pageable);
         return enterpriseInfoPage;
     }
 }
