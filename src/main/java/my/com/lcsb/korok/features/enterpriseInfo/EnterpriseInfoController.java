@@ -63,4 +63,18 @@ public Page<EnterpriseInfo> findall(@RequestParam(required=false , defaultValue=
         Page<EnterpriseInfo> enterpriseInfoPage = enterpriseInfoService.findAll(filter, pageable);
         return enterpriseInfoPage;
     }
+
+    @Transactional(readOnly=true)
+@GetMapping("/listall")
+public Page<EnterpriseInfo> findallByLivestock(@RequestParam(required=false , defaultValue="0") int page,
+            @RequestParam(required = false, defaultValue = "100") int size,
+            @RequestParam(required = false, defaultValue = "code,asc") String sort,
+            @RequestParam(required = false, defaultValue = "Livestock") String filter) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(SortUtils.getSortOrder(sort)));
+        Page<EnterpriseInfo> enterpriseInfoPage = enterpriseInfoService.findAll(filter, pageable);
+        return enterpriseInfoPage;
+    }
+
+
+    
 }
