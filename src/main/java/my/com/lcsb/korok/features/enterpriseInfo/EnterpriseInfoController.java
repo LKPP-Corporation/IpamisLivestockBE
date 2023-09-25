@@ -58,21 +58,22 @@ public class EnterpriseInfoController {
 public Page<EnterpriseInfo> findall(@RequestParam(required=false , defaultValue="0") int page,
             @RequestParam(required = false, defaultValue = "10") int size,
             @RequestParam(required = false, defaultValue = "code,asc") String sort,
-            @RequestParam(required = false, defaultValue = "") String filter) {
+            @RequestParam(required = false, defaultValue = "livestock") String filter) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(SortUtils.getSortOrder(sort)));
         Page<EnterpriseInfo> enterpriseInfoPage = enterpriseInfoService.findAll(filter, pageable);
         return enterpriseInfoPage;
     }
 
-    @Transactional(readOnly=true)
-@GetMapping("/listall")
-public Page<EnterpriseInfo> findallByLivestock(@RequestParam(required=false , defaultValue="0") int page,
-            @RequestParam(required = false, defaultValue = "100") int size,
-            @RequestParam(required = false, defaultValue = "code,asc") String sort,
-            @RequestParam(required = false, defaultValue = "Livestock") String filter) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by(SortUtils.getSortOrder(sort)));
-        Page<EnterpriseInfo> enterpriseInfoPage = enterpriseInfoService.findAll(filter, pageable);
-        return enterpriseInfoPage;
+
+
+ @Transactional(readOnly = true)
+    @GetMapping("/{entercode}")
+    public ResponseEntity<?> findByEnterpriseCode(@PathVariable String entercode) {
+        Optional<EnterpriseInfo> enterpriseInfo = enterpriseInfoService.findByEnterpriseCode(entercode);
+        if (!enterpriseInfo.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(enterpriseInfoService.findByEnterpriseCode(entercode));
     }
 
 
