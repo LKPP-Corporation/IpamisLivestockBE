@@ -1,4 +1,4 @@
-package my.com.lcsb.korok.features.ceLivestock;
+package my.com.lcsb.korok.features.buyerInfo;
 
 import java.util.Optional;
 
@@ -18,49 +18,47 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
-
 import my.com.lcsb.korok.utilities.SortUtils;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v1/ceLivestock")
-public class CeLivestockController {
-    final private CeLivestockService ceLivestockService;
+@RequestMapping("/api/v1/buyerInfo")
+public class BuyerInfoController {
+    final private BuyerInfoService buyerInfoService;
 
-    //save ce_livestock
+    //save buyer info
     @Transactional
     @PostMapping("")
-    public ResponseEntity<?> save(@RequestBody CeLivestock ceLivestock) {
-        return ResponseEntity.ok(ceLivestockService.save(ceLivestock));
+    public ResponseEntity<?> save(@RequestBody BuyerInfo buyerInfo) {
+        return ResponseEntity.ok(buyerInfoService.save(buyerInfo));
     }
 
-     // delete ce_livestock
+    // delete buyer info
     @Transactional
     @DeleteMapping("/{id}")
     public void delete(@PathVariable String id) {
-        ceLivestockService.delete(id);
+        buyerInfoService.delete(id);
     }
 
-    // get ce_livestock by id
+     // get buyer info by id
     @Transactional(readOnly = true)
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable String id) {
-        Optional<CeLivestock> celivestock = ceLivestockService.findById(id);
-        if (!celivestock.isPresent()) {
+        Optional<BuyerInfo> buyerinfo = buyerInfoService.findById(id);
+        if (!buyerinfo.isPresent()) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(ceLivestockService.findById(id));
+        return ResponseEntity.ok(buyerInfoService.findById(id));
     }
 
     @Transactional(readOnly = true)
     @GetMapping("/list")
-    public Page<CeLivestock> findAll(@RequestParam(required = false, defaultValue = "0") int page,
+    public Page<BuyerInfo> findAll(@RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false, defaultValue = "10") int size,
             @RequestParam(required = false, defaultValue = "id,asc") String sort,
             @RequestParam(required = false, defaultValue = "") String filter) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(SortUtils.getSortOrder(sort)));
-        Page<CeLivestock> celivestockPage = ceLivestockService.findAll(filter, pageable);
-        return celivestockPage;
+        Page<BuyerInfo> buyerinfoPage = buyerInfoService.findAll(filter, pageable);
+        return buyerinfoPage;
     }
-
 }

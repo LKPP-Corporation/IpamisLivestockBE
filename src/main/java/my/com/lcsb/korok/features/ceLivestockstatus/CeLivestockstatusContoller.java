@@ -1,4 +1,4 @@
-package my.com.lcsb.korok.features.ceLivestock;
+package my.com.lcsb.korok.features.ceLivestockstatus;
 
 import java.util.Optional;
 
@@ -18,49 +18,49 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
-
 import my.com.lcsb.korok.utilities.SortUtils;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v1/ceLivestock")
-public class CeLivestockController {
-    final private CeLivestockService ceLivestockService;
+@RequestMapping("/api/v1/ceLivestockstatus")
+public class CeLivestockstatusContoller {
+    
+     final private CeLivestockstatusService ceLivestockstatusService;
 
-    //save ce_livestock
+    //save ce_livestockstatus
     @Transactional
     @PostMapping("")
-    public ResponseEntity<?> save(@RequestBody CeLivestock ceLivestock) {
-        return ResponseEntity.ok(ceLivestockService.save(ceLivestock));
+    public ResponseEntity<?> save(@RequestBody CeLivestockstatus ceLivestockstatus) {
+        return ResponseEntity.ok(ceLivestockstatusService.save(ceLivestockstatus));
     }
 
-     // delete ce_livestock
+     // delete ce_livestockstatus
     @Transactional
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable String id) {
-        ceLivestockService.delete(id);
+    public void delete(@PathVariable Long id) {
+        ceLivestockstatusService.delete(id);
     }
 
-    // get ce_livestock by id
+    // get ce_livestockstatus by id
     @Transactional(readOnly = true)
-    @GetMapping("/{id}")
-    public ResponseEntity<?> findById(@PathVariable String id) {
-        Optional<CeLivestock> celivestock = ceLivestockService.findById(id);
-        if (!celivestock.isPresent()) {
+    @GetMapping("/regid/{regid}")
+    public ResponseEntity<?> findById(@PathVariable String regid) {
+        Optional<CeLivestockstatus> celivestockstatus = ceLivestockstatusService.findByRegId(regid);
+        if (!celivestockstatus.isPresent()) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(ceLivestockService.findById(id));
+        return ResponseEntity.ok(celivestockstatus.get());
     }
+
 
     @Transactional(readOnly = true)
     @GetMapping("/list")
-    public Page<CeLivestock> findAll(@RequestParam(required = false, defaultValue = "0") int page,
+    public Page<CeLivestockstatus> findAll(@RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false, defaultValue = "10") int size,
-            @RequestParam(required = false, defaultValue = "id,asc") String sort,
+            @RequestParam(required = false, defaultValue = "regid,asc") String sort,
             @RequestParam(required = false, defaultValue = "") String filter) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(SortUtils.getSortOrder(sort)));
-        Page<CeLivestock> celivestockPage = ceLivestockService.findAll(filter, pageable);
-        return celivestockPage;
+        Page<CeLivestockstatus> celivestockstatusPage = ceLivestockstatusService.findAll(filter, pageable);
+        return celivestockstatusPage;
     }
-
 }

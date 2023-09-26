@@ -1,4 +1,4 @@
-package my.com.lcsb.korok.features.ceLivestock;
+package my.com.lcsb.korok.features.buyerInfo;
 
 import java.text.MessageFormat;
 import java.util.Optional;
@@ -10,44 +10,44 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
-//import my.com.lcsb.korok.features.ceLivestock.CeLivestock;
 
 @RequiredArgsConstructor
 @Service
-public class CeLivestockService {
-     final private CeLivestockRepository ceLivestockRepository;
+public class BuyerInfoService {
+    
+    final private BuyerInfoRepository buyerInfoRepository;
 
-     public CeLivestock save(CeLivestock ceLivestock) {
-        return ceLivestockRepository.save(ceLivestock);
+    public BuyerInfo save(BuyerInfo buyerInfo) {
+        return buyerInfoRepository.save(buyerInfo);
     }
 
-     public Optional<CeLivestock> findById(String id) {
-        return ceLivestockRepository.findById(id);
+    public Optional<BuyerInfo> findById(String id) {
+        return buyerInfoRepository.findById(id);
     }
 
-    // delete livestock
+    // delete buyer info
     public void delete(String id) {
-        ceLivestockRepository.deleteById(id);
+        buyerInfoRepository.deleteById(id);
     }
 
-    public Page<CeLivestock> findAll(String filter, Pageable pageable) {
-        Specification<CeLivestock> spec = getSpec(filter);
-        return ceLivestockRepository.findAll(spec, pageable);
+    public Page<BuyerInfo> findAll(String filter, Pageable pageable) {
+        Specification<BuyerInfo> spec = getSpec(filter);
+        return buyerInfoRepository.findAll(spec, pageable);
     }
 
-    private static Specification<CeLivestock> getSpec(String filter) {
+    private static Specification<BuyerInfo> getSpec(String filter) {
         if (filter == null || filter.isEmpty()) {
             return (root, query, cb) -> {
                 return cb.conjunction();
             };
         }
 
-        Specification<CeLivestock> specid = StringUtils.isNumeric(filter)
+    Specification<BuyerInfo> specid = StringUtils.isNumeric(filter)
                 ? (root, query, builder) -> builder.equal(root.get("id"), filter)
                 : null;
 
         String filterPattern = MessageFormat.format("%{0}%", filter.toLowerCase());
-        Specification<CeLivestock> specname = (root, query, cb) -> cb.like(cb.lower(root.get("name")), filterPattern);
+        Specification<BuyerInfo> specname = (root, query, cb) -> cb.like(cb.lower(root.get("companyname")), filterPattern);
         //Specification<Soil> specremark = (root, query, cb) -> cb.like(cb.lower(root.get("remark")), filterPattern);
 
         //return Specification.where(specid).or(specname).or(specremark);
