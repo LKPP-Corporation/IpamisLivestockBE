@@ -64,7 +64,7 @@ public class CeLivestockService {
 
         String filterPattern = MessageFormat.format("%{0}%", filter.toLowerCase());
         Specification<CeLivestock> specname = (root, query, cb) -> cb.like(cb.lower(root.get("name")), filterPattern);
-        Specification<CeLivestock> specremark = (root, query, cb) -> cb.like(cb.lower(root.get("enterdescp")), filterPattern);
+        Specification<CeLivestock> specremark = (root, query, cb) -> cb.like(cb.lower(root.get("sex")), filterPattern);
 
         return Specification.where(specid).or(specname).or(specremark);
     }

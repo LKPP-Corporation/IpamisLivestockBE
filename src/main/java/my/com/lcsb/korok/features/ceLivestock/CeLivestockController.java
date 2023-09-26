@@ -66,9 +66,9 @@ public class CeLivestockController {
     @Transactional(readOnly = true)
     @GetMapping("/listsire")
     public Page<CeLivestock> findAllSire(@RequestParam(required = false, defaultValue = "0")int page,
-           @RequestParam(required = false, defaultValue = "10") int size,
+           @RequestParam(required = false, defaultValue = "100") int size,
            @RequestParam(required = false, defaultValue = "id,asc") String sort,
-            @RequestParam(required = false, defaultValue = "")String filter ){
+            @RequestParam(required = false, defaultValue = "male")String filter ){
                  Pageable pageable = PageRequest.of(page, size, Sort.by(SortUtils.getSortOrder(sort)));
                  Page<CeLivestock> celivestockPage = ceLivestockService.findAllSire(filter, pageable);
                   return celivestockPage;
@@ -77,9 +77,9 @@ public class CeLivestockController {
     @Transactional(readOnly = true)
     @GetMapping("/listdam")
     public Page<CeLivestock> findAllDam(@RequestParam(required = false, defaultValue = "0")int page,
-           @RequestParam(required = false, defaultValue = "10") int size,
+           @RequestParam(required = false, defaultValue = "100") int size,
            @RequestParam(required = false, defaultValue = "id,asc") String sort,
-            @RequestParam(required = false, defaultValue = "")String filter ){
+            @RequestParam(required = false, defaultValue = "female")String filter ){
                  Pageable pageable = PageRequest.of(page, size, Sort.by(SortUtils.getSortOrder(sort)));
                  Page<CeLivestock> celivestockPage = ceLivestockService.findAllDam(filter, pageable);
                   return celivestockPage;
