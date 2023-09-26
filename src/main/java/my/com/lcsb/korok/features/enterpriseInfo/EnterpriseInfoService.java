@@ -27,6 +27,10 @@ public class EnterpriseInfoService {
         return enterpriseInfoRepository.findById(code);
     }
 
+    public Optional<EnterpriseInfo> findByEnterpriseCode(String entercode) {
+        return enterpriseInfoRepository.findById(entercode);
+    }
+
     // delete soil
     public void delete(String code) {
         enterpriseInfoRepository.deleteById(code);

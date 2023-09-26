@@ -10,14 +10,16 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
-//import my.com.lcsb.korok.features.ceLivestock.CeLivestock;
 
 @RequiredArgsConstructor
 @Service
 public class CeLivestockService {
-     final private CeLivestockRepository ceLivestockRepository;
 
-     public CeLivestock save(CeLivestock ceLivestock) {
+   
+
+    final private CeLivestockRepository ceLivestockRepository;
+
+    public CeLivestock save(CeLivestock ceLivestock) {
         return ceLivestockRepository.save(ceLivestock);
     }
 
@@ -25,12 +27,26 @@ public class CeLivestockService {
         return ceLivestockRepository.findById(id);
     }
 
+    // public Optional<CeLivestock> findByEnterpriseCode(String entercode) {
+    //     return ceLivestockRepository.findById(entercode);
+    // }
+
     // delete livestock
     public void delete(String id) {
         ceLivestockRepository.deleteById(id);
     }
 
     public Page<CeLivestock> findAll(String filter, Pageable pageable) {
+        Specification<CeLivestock> spec = getSpec(filter);
+        return ceLivestockRepository.findAll(spec, pageable);
+    }
+
+       public Page<CeLivestock> findAllSire(String filter, Pageable pageable) {
+        Specification<CeLivestock> spec = getSpec(filter);
+        return ceLivestockRepository.findAll(spec, pageable);
+    }
+
+       public Page<CeLivestock> findAllDam(String filter, Pageable pageable) {
         Specification<CeLivestock> spec = getSpec(filter);
         return ceLivestockRepository.findAll(spec, pageable);
     }
@@ -48,9 +64,10 @@ public class CeLivestockService {
 
         String filterPattern = MessageFormat.format("%{0}%", filter.toLowerCase());
         Specification<CeLivestock> specname = (root, query, cb) -> cb.like(cb.lower(root.get("name")), filterPattern);
-        //Specification<Soil> specremark = (root, query, cb) -> cb.like(cb.lower(root.get("remark")), filterPattern);
+        Specification<CeLivestock> specremark = (root, query, cb) -> cb.like(cb.lower(root.get("enterdescp")), filterPattern);
 
-        //return Specification.where(specid).or(specname).or(specremark);
-        return Specification.where(specid).or(specname);
+        return Specification.where(specid).or(specname).or(specremark);
     }
+
+    
 }
