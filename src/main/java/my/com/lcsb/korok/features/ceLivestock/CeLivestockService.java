@@ -31,7 +31,7 @@ public class CeLivestockService {
     //     return ceLivestockRepository.findById(entercode);
     // }
 
-    // delete soil
+    // delete livestock
     public void delete(String id) {
         ceLivestockRepository.deleteById(id);
     }
