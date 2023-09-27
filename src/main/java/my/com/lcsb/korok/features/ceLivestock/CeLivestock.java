@@ -31,9 +31,9 @@ public class CeLivestock {
     @Column(length = 200)
     private String breeddesc;
 
-    private LocalDate dob;
+    private String dob;
 
-    private LocalDate purchasedt;
+    private String purchasedt;
     
     @Column(precision = 20, scale = 2)
     private BigDecimal purchaseamt;
