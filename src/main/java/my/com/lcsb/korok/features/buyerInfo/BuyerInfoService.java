@@ -21,16 +21,21 @@ public class BuyerInfoService {
         return buyerInfoRepository.save(buyerInfo);
     }
 
-    public Optional<BuyerInfo> findById(String id) {
-        return buyerInfoRepository.findById(id);
+    public Optional<BuyerInfo> findById(String code) {
+        return buyerInfoRepository.findById(code);
     }
 
     // delete buyer info
-    public void delete(String id) {
-        buyerInfoRepository.deleteById(id);
+    public void delete(String code) {
+        buyerInfoRepository.deleteById(code);
     }
 
     public Page<BuyerInfo> findAll(String filter, Pageable pageable) {
+        Specification<BuyerInfo> spec = getSpec(filter);
+        return buyerInfoRepository.findAll(spec, pageable);
+    }
+
+      public Page<BuyerInfo> findAllBuyer(String filter, Pageable pageable) {
         Specification<BuyerInfo> spec = getSpec(filter);
         return buyerInfoRepository.findAll(spec, pageable);
     }
@@ -43,14 +48,13 @@ public class BuyerInfoService {
         }
 
     Specification<BuyerInfo> specid = StringUtils.isNumeric(filter)
-                ? (root, query, builder) -> builder.equal(root.get("id"), filter)
+                ? (root, query, builder) -> builder.equal(root.get("code"), filter)
                 : null;
 
         String filterPattern = MessageFormat.format("%{0}%", filter.toLowerCase());
         Specification<BuyerInfo> specname = (root, query, cb) -> cb.like(cb.lower(root.get("companyname")), filterPattern);
-        //Specification<Soil> specremark = (root, query, cb) -> cb.like(cb.lower(root.get("remark")), filterPattern);
-
-        //return Specification.where(specid).or(specname).or(specremark);
+        
         return Specification.where(specid).or(specname);
     }
+    
 }

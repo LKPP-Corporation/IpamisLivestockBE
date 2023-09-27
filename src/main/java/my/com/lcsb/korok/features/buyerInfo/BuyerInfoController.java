@@ -35,30 +35,41 @@ public class BuyerInfoController {
 
     // delete buyer info
     @Transactional
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable String id) {
-        buyerInfoService.delete(id);
+    @DeleteMapping("/{code}")
+    public void delete(@PathVariable String code) {
+        buyerInfoService.delete(code);
     }
 
      // get buyer info by id
     @Transactional(readOnly = true)
-    @GetMapping("/{id}")
-    public ResponseEntity<?> findById(@PathVariable String id) {
-        Optional<BuyerInfo> buyerinfo = buyerInfoService.findById(id);
+    @GetMapping("/{code}")
+    public ResponseEntity<?> findById(@PathVariable String code) {
+        Optional<BuyerInfo> buyerinfo = buyerInfoService.findById(code);
         if (!buyerinfo.isPresent()) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(buyerInfoService.findById(id));
+        return ResponseEntity.ok(buyerInfoService.findById(code));
     }
 
     @Transactional(readOnly = true)
     @GetMapping("/list")
     public Page<BuyerInfo> findAll(@RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false, defaultValue = "10") int size,
-            @RequestParam(required = false, defaultValue = "id,asc") String sort,
+            @RequestParam(required = false, defaultValue = "code,asc") String sort,
             @RequestParam(required = false, defaultValue = "") String filter) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(SortUtils.getSortOrder(sort)));
         Page<BuyerInfo> buyerinfoPage = buyerInfoService.findAll(filter, pageable);
         return buyerinfoPage;
     }
+
+    @Transactional(readOnly = true)
+    @GetMapping("/listbuyer")
+    public Page<BuyerInfo> findAllBuyer(@RequestParam(required = false, defaultValue = "0")int page,
+           @RequestParam(required = false, defaultValue = "10") int size,
+           @RequestParam(required = false, defaultValue = "code,asc") String sort,
+            @RequestParam(required = false, defaultValue = "")String filter ){
+                 Pageable pageable = PageRequest.of(page, size, Sort.by(SortUtils.getSortOrder(sort)));
+                 Page<BuyerInfo> buyerinfoPage = buyerInfoService.findAllBuyer(filter, pageable);
+                  return buyerinfoPage;
+            }
 }
