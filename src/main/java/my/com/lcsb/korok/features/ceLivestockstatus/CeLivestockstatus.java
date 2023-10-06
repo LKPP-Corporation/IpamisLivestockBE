@@ -10,8 +10,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import lombok.Data;
+import my.com.lcsb.korok.features.buyerInfo.BuyerInfo;
 
 @Data
 @Entity
@@ -37,9 +39,7 @@ public class CeLivestockstatus {
     @Column(length = 255, columnDefinition = "TEXT")
     private String remark;
 
-    private int buyercode;
-
-     @Column(length = 255)
-    private String buyerdesc;
+    @ManyToOne
+    private BuyerInfo buyer;
     
 }
