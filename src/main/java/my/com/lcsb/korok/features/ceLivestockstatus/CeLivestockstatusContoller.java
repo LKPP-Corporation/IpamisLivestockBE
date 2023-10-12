@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
-import my.com.lcsb.korok.features.buyerInfo.BuyerInfo;
+//import my.com.lcsb.korok.features.buyerInfo.BuyerInfo;
 import my.com.lcsb.korok.utilities.SortUtils;
 
 @RequiredArgsConstructor

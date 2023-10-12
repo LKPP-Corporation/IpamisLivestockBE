@@ -1,7 +1,7 @@
 package my.com.lcsb.korok.features.ceLivestock;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+//import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;

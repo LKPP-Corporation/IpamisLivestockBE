@@ -12,7 +12,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
-import my.com.lcsb.korok.features.soil.Soil;
+//import my.com.lcsb.korok.features.soil.Soil;
 
 @RequiredArgsConstructor
 @Service
