@@ -68,7 +68,7 @@ public class CeLivestockController {
     public Page<CeLivestock> findAllSire(@RequestParam(required = false, defaultValue = "0")int page,
            @RequestParam(required = false, defaultValue = "100") int size,
            @RequestParam(required = false, defaultValue = "id,asc") String sort,
-            @RequestParam(required = false, defaultValue = "male")String filter ){
+            @RequestParam(required = false, defaultValue = "jantan")String filter ){
                  Pageable pageable = PageRequest.of(page, size, Sort.by(SortUtils.getSortOrder(sort)));
                  Page<CeLivestock> celivestockPage = ceLivestockService.findAllSire(filter, pageable);
                   return celivestockPage;
@@ -79,7 +79,7 @@ public class CeLivestockController {
     public Page<CeLivestock> findAllDam(@RequestParam(required = false, defaultValue = "0")int page,
            @RequestParam(required = false, defaultValue = "100") int size,
            @RequestParam(required = false, defaultValue = "id,asc") String sort,
-            @RequestParam(required = false, defaultValue = "female")String filter ){
+            @RequestParam(required = false, defaultValue = "betina")String filter ){
                  Pageable pageable = PageRequest.of(page, size, Sort.by(SortUtils.getSortOrder(sort)));
                  Page<CeLivestock> celivestockPage = ceLivestockService.findAllDam(filter, pageable);
                   return celivestockPage;
