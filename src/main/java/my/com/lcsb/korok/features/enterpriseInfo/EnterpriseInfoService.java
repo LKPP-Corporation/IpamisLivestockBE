@@ -55,8 +55,9 @@ public class EnterpriseInfoService {
         String filterPattern = MessageFormat.format("%{0}%", filter.toLowerCase());
         Specification<EnterpriseInfo> specname = (root, query, cb) -> cb.like(cb.lower(root.get("type")), filterPattern);
         Specification<EnterpriseInfo> specremark = (root, query, cb) -> cb.like(cb.lower(root.get("descp")), filterPattern);
+        Specification<EnterpriseInfo> spectype = (root, query, cb) -> cb.like(cb.lower(root.get("type")), filterPattern);
 
-        return Specification.where(specid).or(specname).or(specremark);
+        return Specification.where(specid).or(specname).or(specremark).or(spectype);
     }
 
     

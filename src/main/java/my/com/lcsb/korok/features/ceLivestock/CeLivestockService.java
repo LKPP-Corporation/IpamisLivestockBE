@@ -27,6 +27,13 @@ public class CeLivestockService {
         return ceLivestockRepository.findById(id);
     }
 
+    public void updateStatus(String id,String status){
+        findById(id).ifPresent(dt->{
+            dt.setCurrstatus(status);
+            ceLivestockRepository.save(dt);
+        });
+    }
+
     // public Optional<CeLivestock> findByEnterpriseCode(String entercode) {
     //     return ceLivestockRepository.findById(entercode);
     // }

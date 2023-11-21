@@ -16,22 +16,27 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
+import my.com.lcsb.korok.features.ceLivestock.CeLivestock;
 import lombok.RequiredArgsConstructor;
-//import my.com.lcsb.korok.features.buyerInfo.BuyerInfo;
+import my.com.lcsb.korok.features.buyerInfo.BuyerInfo;
+import my.com.lcsb.korok.features.ceLivestock.CeLivestockService;
 import my.com.lcsb.korok.utilities.SortUtils;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/ceLivestockstatus")
 public class CeLivestockstatusContoller {
     
      final private CeLivestockstatusService ceLivestockstatusService;
+     final private CeLivestockService ceLivestockService;
 
     //save ce_livestockstatus
     @Transactional
     @PostMapping("")
     public ResponseEntity<?> save(@RequestBody CeLivestockstatus ceLivestockstatus) {
+        ceLivestockService.updateStatus(ceLivestockstatus.getRegid(),ceLivestockstatus.getStatus());
         return ResponseEntity.ok(ceLivestockstatusService.save(ceLivestockstatus));
     }
 
@@ -46,7 +51,9 @@ public class CeLivestockstatusContoller {
     @Transactional(readOnly = true)
     @GetMapping("/regid/{regid}")
     public ResponseEntity<?> findById(@PathVariable String regid) {
+        log.info("regid",regid);
         Optional<CeLivestockstatus> celivestockstatus = ceLivestockstatusService.findByRegId(regid);
+        log.info("celivestockstatus {}",celivestockstatus.isPresent());
         if (!celivestockstatus.isPresent()) {
             return ResponseEntity.notFound().build();
         }
