@@ -41,4 +41,8 @@ public class CeLivestock {
     @Column(length = 200)
     private String origin;
 
+    private String sire;
+
+    private String dam;
+
 }
