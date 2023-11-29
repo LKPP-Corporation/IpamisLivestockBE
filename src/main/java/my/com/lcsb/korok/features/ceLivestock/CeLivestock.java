@@ -16,6 +16,9 @@ public class CeLivestock {
     @Column(length = 50)
     private String id;
 
+    @Column(length = 50)
+    private String tagid;
+
      private String name;
      private String sex;
 
