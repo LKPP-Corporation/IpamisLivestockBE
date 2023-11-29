@@ -10,10 +10,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import org.springframework.data.annotation.Transient;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.Data;
 import my.com.lcsb.korok.features.buyerInfo.BuyerInfo;
+import my.com.lcsb.korok.features.ceLivestock.CeLivestock;
 
 @Data
 @Entity
@@ -22,8 +28,8 @@ public class CeLivestockstatus {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 50)
-    private String regid;
+    // @Column(length = 50)
+    // private String regid;
 
     @Column(length = 100)
     private String currstatus;
@@ -32,6 +38,8 @@ public class CeLivestockstatus {
     private String status;
     private LocalDate chgdate;
     private LocalDate transdate;
+
+    private boolean current;
     
     @Column(precision = 20, scale = 2)
     private BigDecimal soldamt;
@@ -41,5 +49,13 @@ public class CeLivestockstatus {
 
     @ManyToOne
     private BuyerInfo buyer;
+
+    @ManyToOne
+    @JsonBackReference
+    @JoinColumn(name = "regid")
+    CeLivestock master;
+
+    @Transient
+    private String tempMasterId;
     
 }

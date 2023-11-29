@@ -80,8 +80,6 @@ public class CeLivestockService {
         return Specification.where(specid).or(specstatus);
     }
     
-    
-
 
     private static Specification<CeLivestock> getSpec(String filter) {
         if (filter == null || filter.isEmpty()) {

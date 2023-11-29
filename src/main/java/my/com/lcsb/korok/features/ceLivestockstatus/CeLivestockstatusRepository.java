@@ -8,5 +8,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 public interface CeLivestockstatusRepository extends JpaRepository<CeLivestockstatus , Long> , JpaSpecificationExecutor<CeLivestockstatus>  {
     
-    Optional<CeLivestockstatus> findByRegid(String regid);
+    // Optional<CeLivestockstatus> findByRegid(String regid);
 }

@@ -36,7 +36,9 @@ public class CeLivestockstatusContoller {
     @Transactional
     @PostMapping("")
     public ResponseEntity<?> save(@RequestBody CeLivestockstatus ceLivestockstatus) {
-        ceLivestockService.updateStatus(ceLivestockstatus.getRegid(),ceLivestockstatus.getStatus());
+        ceLivestockService.updateStatus(ceLivestockstatus.getTempMasterId(),ceLivestockstatus.getStatus());
+        ceLivestockstatus.setMaster(ceLivestockService.findById(ceLivestockstatus.getTempMasterId()).get());
+        //ceLivestockstatusService.save(ceLivestockstatus);
         return ResponseEntity.ok(ceLivestockstatusService.save(ceLivestockstatus));
     }
 
@@ -48,17 +50,17 @@ public class CeLivestockstatusContoller {
     }
 
     // get ce_livestockstatus by id
-    @Transactional(readOnly = true)
-    @GetMapping("/regid/{regid}")
-    public ResponseEntity<?> findById(@PathVariable String regid) {
-        log.info("regid",regid);
-        Optional<CeLivestockstatus> celivestockstatus = ceLivestockstatusService.findByRegId(regid);
-        log.info("celivestockstatus {}",celivestockstatus.isPresent());
-        if (!celivestockstatus.isPresent()) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(celivestockstatus.get());
-    }
+    // @Transactional(readOnly = true)
+    // @GetMapping("/regid/{regid}")
+    // public ResponseEntity<?> findById(@PathVariable String regid) {
+    //     log.info("regid",regid);
+    //     Optional<CeLivestockstatus> celivestockstatus = ceLivestockstatusService.findByRegId(regid);
+    //     log.info("celivestockstatus {}",celivestockstatus.isPresent());
+    //     if (!celivestockstatus.isPresent()) {
+    //         return ResponseEntity.notFound().build();
+    //     }
+    //     return ResponseEntity.ok(celivestockstatus.get());
+    // }
 
 
     @Transactional(readOnly = true)
@@ -68,7 +70,11 @@ public class CeLivestockstatusContoller {
             @RequestParam(required = false, defaultValue = "regid,asc") String sort,
             @RequestParam(required = false, defaultValue = "") String filter) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(SortUtils.getSortOrder(sort)));
-        Page<CeLivestockstatus> celivestockstatusPage = ceLivestockstatusService.findAll(filter, pageable);
+        Page<CeLivestockstatus> celivestockstatusPage = ceLivestockstatusService.findAll(filter, pageable).map((dt)->{
+            dt.setTempMasterId(dt.getMaster().getId());
+            return dt;
+        }
+        );
         return celivestockstatusPage;
     }
 

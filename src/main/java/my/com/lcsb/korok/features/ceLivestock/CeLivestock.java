@@ -1,13 +1,19 @@
 package my.com.lcsb.korok.features.ceLivestock;
 
 import java.math.BigDecimal;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 //import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Data;
+import my.com.lcsb.korok.features.ceLivestockstatus.CeLivestockstatus;
 
 @Data
 @Entity
@@ -25,8 +31,8 @@ public class CeLivestock {
      @Column(length = 50)
     private String currstatus;
 
-    private int entercode;
-    private int breedcode;
+    private String entercode;
+    private String breedcode;
 
     @Column(length = 200)
     private String enterdesc;
@@ -47,5 +53,9 @@ public class CeLivestock {
     private String sire;
 
     private String dam;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "master",cascade = CascadeType.ALL)
+    private List<CeLivestockstatus> statusList;
 
 }
