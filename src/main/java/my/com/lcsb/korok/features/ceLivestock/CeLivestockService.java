@@ -73,7 +73,8 @@ public class CeLivestockService {
                 ? (root, query, builder) -> builder.equal(root.get("id"), filter)
                 : null;
 
-        String filterPattern = MessageFormat.format("%{0}%", filter.toLowerCase());
+        //String filterPattern = MessageFormat.format("%{0}%", filter.toLowerCase());
+        String filterPattern = MessageFormat.format("{0}", filter.toLowerCase());
         Specification<CeLivestock> specstatus = (root, query, cb) -> cb.like(cb.lower(root.get("currstatus")), filterPattern);
         
         return Specification.where(specid).or(specstatus);
