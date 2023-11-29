@@ -85,4 +85,15 @@ public class CeLivestockController {
                   return celivestockPage;
             }
 
+    @Transactional(readOnly = true)
+    @GetMapping("/listdeath")
+    public Page<CeLivestock> findAllDeath(@RequestParam(required = false, defaultValue = "0")int page,
+           @RequestParam(required = false, defaultValue = "100") int size,
+           @RequestParam(required = false, defaultValue = "id,asc") String sort,
+            @RequestParam(required = false, defaultValue = "Death")String filter ){
+                 Pageable pageable = PageRequest.of(page, size, Sort.by(SortUtils.getSortOrder(sort)));
+                 Page<CeLivestock> celivestockPage = ceLivestockService.findAllDeath(filter, pageable);
+                  return celivestockPage;
+            }
+
 }

@@ -57,6 +57,30 @@ public class CeLivestockService {
         Specification<CeLivestock> spec = getSpec(filter);
         return ceLivestockRepository.findAll(spec, pageable);
     }
+    public Page<CeLivestock> findAllDeath(String filter, Pageable pageable) {
+        Specification<CeLivestock> specdeath = getSpecDeath(filter);
+        return ceLivestockRepository.findAll(specdeath, pageable);
+    }
+
+     private static Specification<CeLivestock> getSpecDeath(String filter) {
+        if (filter == null || filter.isEmpty()) {
+            return (root, query, cb) -> {
+                return cb.conjunction();
+            };
+        }
+
+        Specification<CeLivestock> specid = StringUtils.isNumeric(filter)
+                ? (root, query, builder) -> builder.equal(root.get("id"), filter)
+                : null;
+
+        String filterPattern = MessageFormat.format("%{0}%", filter.toLowerCase());
+        Specification<CeLivestock> specstatus = (root, query, cb) -> cb.like(cb.lower(root.get("currstatus")), filterPattern);
+        
+        return Specification.where(specid).or(specstatus);
+    }
+    
+    
+
 
     private static Specification<CeLivestock> getSpec(String filter) {
         if (filter == null || filter.isEmpty()) {
