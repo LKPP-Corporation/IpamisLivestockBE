@@ -25,9 +25,9 @@ public class CeLivestockstatusService {
         return ceLivestockstatusRepository.findById(id);
     }
 
-     public Optional<CeLivestockstatus> findByRegId(String regid) {
-        return ceLivestockstatusRepository.findByRegid(regid);
-    }    
+    //  public Optional<CeLivestockstatus> findByRegId(String regid) {
+    //     return ceLivestockstatusRepository.findByRegid(regid);
+    // }    
 
     // delete soil
     public void delete(Long id) {

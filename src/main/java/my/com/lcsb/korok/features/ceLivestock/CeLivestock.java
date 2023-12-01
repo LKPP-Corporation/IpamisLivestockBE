@@ -54,6 +54,8 @@ public class CeLivestock {
 
     private String dam;
 
+    private BigDecimal blood;
+
     @JsonManagedReference
     @OneToMany(mappedBy = "master",cascade = CascadeType.ALL)
     private List<CeLivestockstatus> statusList;
